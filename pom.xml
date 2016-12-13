@@ -30,7 +30,7 @@
 		<spider.version>0.12-SNAPSHOT</spider.version>
 		<basicstorage.version>0.3-SNAPSHOT</basicstorage.version>
 		<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
-		<jersey.version>2.25</jersey.version>
+<!-- 		<jersey.version>2.25</jersey.version> -->
 	</properties>
 
 	<scm>
@@ -99,22 +99,22 @@
 			<version>${javax.ws.rs.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet</artifactId>
-			<version>${jersey.version}</version>
-			<scope>compile</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.glassfish.jersey.containers</groupId> -->
+<!-- 			<artifactId>jersey-container-servlet</artifactId> -->
+<!-- 			<version>${jersey.version}</version> -->
+<!-- 			<scope>compile</scope> -->
+<!-- 		</dependency> -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.glassfish.jersey.media</groupId> -->
 		<!-- <artifactId>jersey-media-multipart</artifactId> -->
 		<!-- <version>${jersey.version}</version> -->
 		<!-- </dependency> -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.servlet</groupId> -->
+<!-- 			<artifactId>javax.servlet-api</artifactId> -->
+<!-- 			<version>3.0.1</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
 	</dependencies>
 </project>
