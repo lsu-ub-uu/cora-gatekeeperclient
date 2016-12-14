@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Uppsala University Library
+ * Copyright 2016 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -17,25 +17,23 @@
  *     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.uu.ub.cora.gatekeeperclient.dependency;
+package se.uu.ub.cora.gatekeeperclient.http;
 
-import se.uu.ub.cora.gatekeeperclient.authentication.Gatekeeper;
+import static org.testng.Assert.assertTrue;
 
-public final class GatekeeperInstanceProvider {
-	private static GatekeeperLocator locator;
+import org.testng.annotations.Test;
 
-	private GatekeeperInstanceProvider() {
-		// not called
-		throw new UnsupportedOperationException();
+import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
+import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactory;
+import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactoryImp;
+import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerImp;
+
+public class HttpHandlerFactoryTest {
+	@Test
+	public void testFactor() {
+		HttpHandlerFactory httpHandlerFactory = new HttpHandlerFactoryImp();
+		String url = "http://google.se";
+		HttpHandler httpHandler = httpHandlerFactory.factor(url);
+		assertTrue(httpHandler instanceof HttpHandlerImp);
 	}
-
-	public static void setGatekeeperLocator(GatekeeperLocator locator) {
-		GatekeeperInstanceProvider.locator = locator;
-
-	}
-
-	public static Gatekeeper getGatekeeper() {
-		return locator.locateGatekeeper();
-	}
-
 }

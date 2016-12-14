@@ -17,22 +17,10 @@
  *     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.uu.ub.cora.gatekeeperclient;
+package se.uu.ub.cora.gatekeeperclient.http;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface HttpHandlerFactory {
 
-import se.uu.ub.cora.gatekeeperclient.UserPicker;
-import se.uu.ub.cora.gatekeeperclient.UserPickerFactory;
-
-public class UserPickerFactorySpy implements UserPickerFactory {
-	public List<UserPickerSpy> factoredUserPickers = new ArrayList<>();
-
-	@Override
-	public UserPicker factor() {
-		UserPickerSpy userPickerSpy = new UserPickerSpy();
-		factoredUserPickers.add(userPickerSpy);
-		return userPickerSpy;
-	}
+	HttpHandler factor(String url);
 
 }

@@ -17,34 +17,46 @@
  *     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.uu.ub.cora.gatekeeperclient.authentication;
+package se.uu.ub.cora.gatekeeperclient.http;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerImp;
 
-public class HttpHandlerFactoryImp implements HttpHandlerFactory {
+public class HttpHandlerSpy implements HttpHandler {
+
+	public String requestMetod;
+	public String url;
+	private String jsonAnswer;
+	private Status responseCode = Response.Status.OK;
 
 	@Override
-	public HttpHandler factor(String urlString) {
-		// TODO Auto-generated method stub
-		URL url;
-		HttpURLConnection urlConnection = null;
-		try {
-			url = new URL(urlString);
-			urlConnection = (HttpURLConnection) url.openConnection();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return HttpHandlerImp.usingURLConnection(urlConnection);
+	public void setRequestMethod(String requestMetod) {
+		this.requestMetod = requestMetod;
+	}
+
+	public void setResponseText(String jsonAnswer) {
+		this.jsonAnswer = jsonAnswer;
+
+	}
+
+	@Override
+	public String getResponseText() {
+		return jsonAnswer;
+	}
+
+	public void setResponseCode(Status responseStatus) {
+		this.responseCode = responseStatus;
+	}
+
+	@Override
+	public Status getResponseCode() {
+		return responseCode;
+	}
+
+	public void setURL(String url) {
+		this.url = url;
 	}
 
 }

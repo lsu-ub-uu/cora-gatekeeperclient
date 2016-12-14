@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 
 import se.uu.ub.cora.beefeater.authentication.User;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
+import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactory;
 import se.uu.ub.cora.json.parser.JsonArray;
 import se.uu.ub.cora.json.parser.JsonObject;
 import se.uu.ub.cora.json.parser.JsonParser;

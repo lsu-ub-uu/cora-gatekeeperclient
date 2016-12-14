@@ -17,27 +17,31 @@
  *     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.uu.ub.cora.gatekeeperclient;
+package se.uu.ub.cora.gatekeeperclient.http;
 
-import se.uu.ub.cora.gatekeeperclient.UserInfo;
-import se.uu.ub.cora.gatekeeperclient.UserPicker;
-import se.uu.ub.cora.gatekeeperclient.authentication.User;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-public class UserPickerSpy implements UserPicker {
-
-	public boolean userPickerWasCalled = false;
-	public UserInfo usedUserInfo = null;
-	public User returnedUser = null;
+public class HttpHandlerFactoryImp implements HttpHandlerFactory {
 
 	@Override
-	public User pickUser(UserInfo userInfo) {
-		usedUserInfo = userInfo;
-		userPickerWasCalled = true;
-		User user = new User("12345");
-		user.loginId = userInfo.idFromLogin;
-		user.loginDomain = userInfo.domainFromLogin;
-		returnedUser = user;
-		return user;
+	public HttpHandler factor(String urlString) {
+		// TODO Auto-generated method stub
+		URL url;
+		HttpURLConnection urlConnection = null;
+		try {
+			url = new URL(urlString);
+			urlConnection = (HttpURLConnection) url.openConnection();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return HttpHandlerImp.usingURLConnection(urlConnection);
 	}
 
 }

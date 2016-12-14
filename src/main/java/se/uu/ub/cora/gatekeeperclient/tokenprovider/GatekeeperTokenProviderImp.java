@@ -19,7 +19,6 @@
 
 package se.uu.ub.cora.gatekeeperclient.tokenprovider;
 
-import se.uu.ub.cora.gatekeeperclient.GatekeeperImp;
 import se.uu.ub.cora.gatekeeperclient.UserInfo;
 
 public class GatekeeperTokenProviderImp implements GatekeeperTokenProvider {
@@ -28,7 +27,8 @@ public class GatekeeperTokenProviderImp implements GatekeeperTokenProvider {
 	public String getAuthTokenForUserInfo(UserInfo userInfo) {
 		// the idea is to in the future change this to an https call to a
 		// running gatekeeper server
-		return GatekeeperImp.INSTANCE.getAuthTokenForUserInfo(userInfo);
+		// return GatekeeperImp.INSTANCE.getAuthTokenForUserInfo(userInfo);
+		return null;
 	}
 
 }
