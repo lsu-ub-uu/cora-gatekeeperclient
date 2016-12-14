@@ -26,11 +26,9 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.nio.charset.StandardCharsets;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
 public final class HttpHandlerImp implements HttpHandler {
 
+	private static final int STATUS_INTERNAL_SERVER_ERROR = 500;
 	private HttpURLConnection urlConnection;
 
 	public static HttpHandlerImp usingURLConnection(HttpURLConnection httpUrlConnection) {
@@ -71,14 +69,14 @@ public final class HttpHandlerImp implements HttpHandler {
 	}
 
 	@Override
-	public Status getResponseCode() {
+	public int getResponseCode() {
 		try {
-			return Response.Status.fromStatusCode(urlConnection.getResponseCode());
+			return urlConnection.getResponseCode();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return Response.Status.INTERNAL_SERVER_ERROR;
+		return STATUS_INTERNAL_SERVER_ERROR;
 	}
 
 }

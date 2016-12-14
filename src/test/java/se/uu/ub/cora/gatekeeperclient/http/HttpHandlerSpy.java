@@ -19,17 +19,12 @@
 
 package se.uu.ub.cora.gatekeeperclient.http;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
-
 public class HttpHandlerSpy implements HttpHandler {
 
 	public String requestMetod;
 	public String url;
 	private String jsonAnswer;
-	private Status responseCode = Response.Status.OK;
+	private int responseCode = 200;
 
 	@Override
 	public void setRequestMethod(String requestMetod) {
@@ -46,12 +41,12 @@ public class HttpHandlerSpy implements HttpHandler {
 		return jsonAnswer;
 	}
 
-	public void setResponseCode(Status responseStatus) {
+	public void setResponseCode(int responseStatus) {
 		this.responseCode = responseStatus;
 	}
 
 	@Override
-	public Status getResponseCode() {
+	public int getResponseCode() {
 		return responseCode;
 	}
 

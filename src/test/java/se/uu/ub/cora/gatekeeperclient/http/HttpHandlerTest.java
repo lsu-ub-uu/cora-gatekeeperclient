@@ -24,12 +24,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.ws.rs.core.Response;
-
 import org.testng.annotations.Test;
-
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerImp;
 
 public class HttpHandlerTest {
 
@@ -49,7 +44,7 @@ public class HttpHandlerTest {
 		HttpHandler httpHandler = HttpHandlerImp.usingURLConnection(urlConnection);
 
 		urlConnection.setResponseCode(200);
-		assertEquals(httpHandler.getResponseCode(), Response.Status.OK);
+		assertEquals(httpHandler.getResponseCode(), 200);
 	}
 
 	@Test

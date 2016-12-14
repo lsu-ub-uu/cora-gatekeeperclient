@@ -19,14 +19,12 @@
 
 package se.uu.ub.cora.gatekeeperclient.http;
 
-import javax.ws.rs.core.Response.Status;
-
 public interface HttpHandler {
 
 	void setRequestMethod(String requestMetod);
 
 	String getResponseText();
 
-	Status getResponseCode();
+	int getResponseCode();
 
 }

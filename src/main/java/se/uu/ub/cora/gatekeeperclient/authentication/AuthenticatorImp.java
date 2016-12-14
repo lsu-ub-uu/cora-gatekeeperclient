@@ -19,8 +19,6 @@
 
 package se.uu.ub.cora.gatekeeperclient.authentication;
 
-import javax.ws.rs.core.Response;
-
 import se.uu.ub.cora.beefeater.authentication.User;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactory;
@@ -33,6 +31,7 @@ import se.uu.ub.cora.spider.authentication.Authenticator;
 import se.uu.ub.cora.spider.authorization.AuthorizationException;
 
 public final class AuthenticatorImp implements Authenticator {
+	private static final int STATUS_OK = 200;
 	private static final String CHILDREN = "children";
 	private HttpHandlerFactory httpHandlerFactory;
 	private User user;
@@ -61,7 +60,7 @@ public final class AuthenticatorImp implements Authenticator {
 		httpHandler.setRequestMethod("GET");
 		// httpHandlerFactory.setURL("http://localhost:8080/gatekeeper/user/" +
 		// authToken);
-		if (httpHandler.getResponseCode() != Response.Status.OK) {
+		if (httpHandler.getResponseCode() != STATUS_OK) {
 			throw new AuthorizationException("authToken gives no authorization");
 		}
 		responseText = httpHandler.getResponseText();

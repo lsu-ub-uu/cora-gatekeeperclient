@@ -23,8 +23,6 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Iterator;
 
-import javax.ws.rs.core.Response;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -71,7 +69,7 @@ public class AuthenticatorTest {
 
 	@Test(expectedExceptions = AuthorizationException.class)
 	public void testUnauthorizedToken() {
-		httpHandlerFactory.setResponseCode(Response.Status.UNAUTHORIZED);
+		httpHandlerFactory.setResponseCode(401);
 		logedInUser = authenticator.getUserForToken("dummyNonAuthenticatedToken");
 	}
 

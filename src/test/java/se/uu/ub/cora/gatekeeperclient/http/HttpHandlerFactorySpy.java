@@ -22,15 +22,10 @@ package se.uu.ub.cora.gatekeeperclient.http;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response.Status;
-
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactory;
-
 public class HttpHandlerFactorySpy implements HttpHandlerFactory {
 
 	public List<HttpHandlerSpy> factored = new ArrayList<>();
-	private Status status = Status.OK;
+	private int status = 200;
 
 	public HttpHandlerSpy getFactored(int i) {
 		return factored.get(i);
@@ -50,7 +45,7 @@ public class HttpHandlerFactorySpy implements HttpHandlerFactory {
 		return httpHandlerSpy;
 	}
 
-	public void setResponseCode(Status status) {
+	public void setResponseCode(int status) {
 		this.status = status;
 	}
 
