@@ -20,8 +20,8 @@
 package se.uu.ub.cora.gatekeeperclient.authentication;
 
 import se.uu.ub.cora.beefeater.authentication.User;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandler;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactory;
+import se.uu.ub.cora.httphandler.HttpHandler;
+import se.uu.ub.cora.httphandler.HttpHandlerFactory;
 import se.uu.ub.cora.json.parser.JsonArray;
 import se.uu.ub.cora.json.parser.JsonObject;
 import se.uu.ub.cora.json.parser.JsonParser;
@@ -39,12 +39,12 @@ public final class AuthenticatorImp implements Authenticator {
 	private String responseText;
 	private HttpHandler httpHandler;
 
-	public static AuthenticatorImp usingHttpHandlerFactory(HttpHandlerFactory httpHandlerFactory) {
-		return new AuthenticatorImp(httpHandlerFactory);
-	}
-
 	private AuthenticatorImp(HttpHandlerFactory httpHandlerFactory) {
 		this.httpHandlerFactory = httpHandlerFactory;
+	}
+
+	public static AuthenticatorImp usingHttpHandlerFactory(HttpHandlerFactory httpHandlerFactory) {
+		return new AuthenticatorImp(httpHandlerFactory);
 	}
 
 	@Override

@@ -26,6 +26,7 @@
 
 	<properties>
 		<json.version>0.3-SNAPSHOT</json.version>
+		<httphandler.version>0.1-SNAPSHOT</httphandler.version>
 		<beefeater.version>0.5-SNAPSHOT</beefeater.version>
 		<spider.version>0.12-SNAPSHOT</spider.version>
 	</properties>
@@ -67,6 +68,12 @@
 			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>json</artifactId>
 			<version>${json.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>httphandler</artifactId>
+			<version>${httphandler.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
