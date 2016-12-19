@@ -41,7 +41,9 @@ public class AuthenticatorTest {
 	@BeforeMethod
 	public void setUp() {
 		httpHandlerFactory = new HttpHandlerFactorySpy();
-		authenticator = AuthenticatorImp.usingHttpHandlerFactory(httpHandlerFactory);
+		String baseUrl = "http://localhost:8080/gatekeeper/";
+		authenticator = AuthenticatorImp.usingBaseUrlAndHttpHandlerFactory(baseUrl,
+				httpHandlerFactory);
 	}
 
 	@Test
@@ -50,6 +52,14 @@ public class AuthenticatorTest {
 		httpHandler = httpHandlerFactory.getFactored(0);
 		assertEquals(httpHandler.requestMetod, "GET");
 		assertEquals(httpHandler.url, "http://localhost:8080/gatekeeper/rest/user/someToken");
+	}
+
+	@Test
+	public void testHttpHandlerCalledCorrectlyWithNullToken() {
+		logedInUser = authenticator.getUserForToken(null);
+		httpHandler = httpHandlerFactory.getFactored(0);
+		assertEquals(httpHandler.requestMetod, "GET");
+		assertEquals(httpHandler.url, "http://localhost:8080/gatekeeper/rest/user/");
 	}
 
 	@Test

@@ -37,14 +37,16 @@ public final class AuthenticatorImp implements Authenticator {
 	private User user;
 	private JsonObject jsonUser;
 	private String responseText;
-	private HttpHandler httpHandler;
+	private String baseUrl;
 
-	private AuthenticatorImp(HttpHandlerFactory httpHandlerFactory) {
+	private AuthenticatorImp(String baseUrl, HttpHandlerFactory httpHandlerFactory) {
+		this.baseUrl = baseUrl;
 		this.httpHandlerFactory = httpHandlerFactory;
 	}
 
-	public static AuthenticatorImp usingHttpHandlerFactory(HttpHandlerFactory httpHandlerFactory) {
-		return new AuthenticatorImp(httpHandlerFactory);
+	public static AuthenticatorImp usingBaseUrlAndHttpHandlerFactory(String baseUrl,
+			HttpHandlerFactory httpHandlerFactory) {
+		return new AuthenticatorImp(baseUrl, httpHandlerFactory);
 	}
 
 	@Override
@@ -54,12 +56,12 @@ public final class AuthenticatorImp implements Authenticator {
 	}
 
 	private void getUserForTokenFromGatekeeper(String authToken) {
-		// TODO: read from context.xml
-		String url = "http://localhost:8080/gatekeeper/rest/user/" + authToken;
-		httpHandler = httpHandlerFactory.factor(url);
+		String url = baseUrl + "rest/user/";
+		if (authToken != null) {
+			url += authToken;
+		}
+		HttpHandler httpHandler = httpHandlerFactory.factor(url);
 		httpHandler.setRequestMethod("GET");
-		// httpHandlerFactory.setURL("http://localhost:8080/gatekeeper/user/" +
-		// authToken);
 		if (httpHandler.getResponseCode() != STATUS_OK) {
 			throw new AuthorizationException("authToken gives no authorization");
 		}
