@@ -19,6 +19,8 @@
 
 package se.uu.ub.cora.gatekeeperclient.http;
 
+import se.uu.ub.cora.httphandler.HttpHandler;
+
 public class HttpHandlerSpy implements HttpHandler {
 
 	public String requestMetod;

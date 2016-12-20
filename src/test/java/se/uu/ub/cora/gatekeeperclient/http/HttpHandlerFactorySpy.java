@@ -22,6 +22,9 @@ package se.uu.ub.cora.gatekeeperclient.http;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.uu.ub.cora.httphandler.HttpHandler;
+import se.uu.ub.cora.httphandler.HttpHandlerFactory;
+
 public class HttpHandlerFactorySpy implements HttpHandlerFactory {
 
 	public List<HttpHandlerSpy> factored = new ArrayList<>();
