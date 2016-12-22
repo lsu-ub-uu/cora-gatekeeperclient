@@ -19,6 +19,8 @@
 
 package se.uu.ub.cora.gatekeeperclient.http;
 
+import java.io.InputStream;
+
 import se.uu.ub.cora.httphandler.HttpHandler;
 
 public class HttpHandlerSpy implements HttpHandler {
@@ -54,6 +56,30 @@ public class HttpHandlerSpy implements HttpHandler {
 
 	public void setURL(String url) {
 		this.url = url;
+	}
+
+	@Override
+	public void setOutput(String outputString) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setRequestProperty(String key, String value) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getErrorText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setStreamOutput(InputStream stream) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
