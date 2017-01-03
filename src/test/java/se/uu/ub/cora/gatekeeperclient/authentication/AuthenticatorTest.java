@@ -29,8 +29,8 @@ import org.testng.annotations.Test;
 import se.uu.ub.cora.beefeater.authentication.User;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactorySpy;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerSpy;
+import se.uu.ub.cora.spider.authentication.AuthenticationException;
 import se.uu.ub.cora.spider.authentication.Authenticator;
-import se.uu.ub.cora.spider.authorization.AuthorizationException;
 
 public class AuthenticatorTest {
 	private Authenticator authenticator;
@@ -77,7 +77,7 @@ public class AuthenticatorTest {
 		assertEquals(iterator.next(), "someRole1");
 	}
 
-	@Test(expectedExceptions = AuthorizationException.class)
+	@Test(expectedExceptions = AuthenticationException.class)
 	public void testUnauthorizedToken() {
 		httpHandlerFactory.setResponseCode(401);
 		logedInUser = authenticator.getUserForToken("dummyNonAuthenticatedToken");

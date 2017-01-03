@@ -82,4 +82,10 @@ public class HttpHandlerSpy implements HttpHandler {
 
 	}
 
+	@Override
+	public String getHeaderField(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

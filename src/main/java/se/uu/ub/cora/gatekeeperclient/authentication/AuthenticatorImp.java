@@ -27,8 +27,8 @@ import se.uu.ub.cora.json.parser.JsonObject;
 import se.uu.ub.cora.json.parser.JsonParser;
 import se.uu.ub.cora.json.parser.JsonValue;
 import se.uu.ub.cora.json.parser.org.OrgJsonParser;
+import se.uu.ub.cora.spider.authentication.AuthenticationException;
 import se.uu.ub.cora.spider.authentication.Authenticator;
-import se.uu.ub.cora.spider.authorization.AuthorizationException;
 
 public final class AuthenticatorImp implements Authenticator {
 	private static final int STATUS_OK = 200;
@@ -63,7 +63,7 @@ public final class AuthenticatorImp implements Authenticator {
 		HttpHandler httpHandler = httpHandlerFactory.factor(url);
 		httpHandler.setRequestMethod("GET");
 		if (httpHandler.getResponseCode() != STATUS_OK) {
-			throw new AuthorizationException("authToken gives no authorization");
+			throw new AuthenticationException("authToken gives no authorization");
 		}
 		responseText = httpHandler.getResponseText();
 	}
