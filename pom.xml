@@ -19,7 +19,7 @@
 	</parent>
 
 	<artifactId>gatekeeperclient</artifactId>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>gatekeeperclient</name>
@@ -27,8 +27,8 @@
 	<properties>
 		<json.version>0.3-SNAPSHOT</json.version>
 		<httphandler.version>0.2-SNAPSHOT</httphandler.version>
-		<beefeater.version>0.5-SNAPSHOT</beefeater.version>
-		<spider.version>0.13-SNAPSHOT</spider.version>
+		<beefeater.version>0.6-SNAPSHOT</beefeater.version>
+		<spider.version>0.14-SNAPSHOT</spider.version>
 	</properties>
 
 	<scm>
