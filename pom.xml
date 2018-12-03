@@ -15,20 +15,20 @@
 	<parent>
 		<groupId>se.uu.ub.cora</groupId>
 		<artifactId>cora-parent</artifactId>
-		<version>0.7-SNAPSHOT</version>
+		<version>0.8-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>gatekeeperclient</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>gatekeeperclient</name>
 
 	<properties>
-		<json.version>0.4-SNAPSHOT</json.version>
-		<httphandler.version>0.4-SNAPSHOT</httphandler.version>
-		<beefeater.version>0.7-SNAPSHOT</beefeater.version>
-		<spider.version>0.15-SNAPSHOT</spider.version>
+		<json.version>0.5-SNAPSHOT</json.version>
+		<httphandler.version>0.5-SNAPSHOT</httphandler.version>
+		<beefeater.version>0.8-SNAPSHOT</beefeater.version>
+		<spider.version>0.16-SNAPSHOT</spider.version>
 	</properties>
 
 	<scm>
