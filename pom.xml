@@ -15,26 +15,26 @@
 	<parent>
 		<groupId>se.uu.ub.cora</groupId>
 		<artifactId>cora-parent</artifactId>
-		<version>0.8-SNAPSHOT</version>
+		<version>0.8.6</version>
 	</parent>
 
 	<artifactId>gatekeeperclient</artifactId>
-	<version>0.6-SNAPSHOT</version>
+	<version>0.6.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>gatekeeperclient</name>
 
 	<properties>
-		<json.version>0.5-SNAPSHOT</json.version>
-		<httphandler.version>0.5-SNAPSHOT</httphandler.version>
-		<beefeater.version>0.8-SNAPSHOT</beefeater.version>
-		<spider.version>0.16-SNAPSHOT</spider.version>
+		<json.version>0.5.7</json.version>
+		<httphandler.version>0.5.1</httphandler.version>
+		<beefeater.version>0.8.0</beefeater.version>
+		<spider.version>0.16.0</spider.version>
 	</properties>
 
 	<scm>
-		<connection>scm:git:https://github.com/lsu-ub-uu/gatekeeperclient.git</connection>
-		<developerConnection>scm:git:https://github.com/lsu-ub-uu/gatekeeperclient.git</developerConnection>
-		<url>https://github.com/lsu-ub-uu/gatekeeperclient.git</url>
+		<connection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</connection>
+		<developerConnection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</developerConnection>
+		<url>https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</url>
 	</scm>
 
 	<dependencies>
