@@ -6,36 +6,36 @@
 	be useful, ~ but WITHOUT ANY WARRANTY; without even the implied warranty 
 	of ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the ~ GNU General 
 	Public License for more details. ~ ~ You should have received a copy of the 
-	GNU General Public License ~ along with Cora. If not, see <http://www.gnu.org/licenses/>. -->
+	GNU General Public License ~ along with Cora. If not, see <http://www.gnu.org/licenses />. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>se.uu.ub.cora</groupId>
 		<artifactId>cora-parent</artifactId>
-		<version>0.7-SNAPSHOT</version>
+		<version>0.8.6</version>
 	</parent>
 
 	<artifactId>gatekeeperclient</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>gatekeeperclient</name>
 
 	<properties>
-		<json.version>0.4-SNAPSHOT</json.version>
-		<httphandler.version>0.4-SNAPSHOT</httphandler.version>
-		<beefeater.version>0.7-SNAPSHOT</beefeater.version>
-		<spider.version>0.15-SNAPSHOT</spider.version>
+		<json.version>0.5.7</json.version>
+		<httphandler.version>0.5.1</httphandler.version>
+		<beefeater.version>0.8.0</beefeater.version>
+		<spider.version>0.16.0</spider.version>
 	</properties>
 
 	<scm>
-		<connection>scm:git:https://github.com/lsu-ub-uu/gatekeeperclient.git</connection>
-		<developerConnection>scm:git:https://github.com/lsu-ub-uu/gatekeeperclient.git</developerConnection>
-		<url>https://github.com/lsu-ub-uu/gatekeeperclient.git</url>
-	</scm>
+		<connection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</connection>
+		<developerConnection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</developerConnection>
+		<url>https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</url>
+	  <tag>HEAD</tag>
+  </scm>
 
 	<dependencies>
 		<dependency>
