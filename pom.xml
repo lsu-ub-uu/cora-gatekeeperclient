@@ -34,7 +34,7 @@
 		<connection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</connection>
 		<developerConnection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</developerConnection>
 		<url>https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</url>
-	  <tag>HEAD</tag>
+	  <tag>release/0.8</tag>
   </scm>
 
 	<dependencies>
