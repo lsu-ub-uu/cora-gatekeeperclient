@@ -25,7 +25,7 @@
 
 	<properties>
 		<json.version>0.5.7</json.version>
-		<httphandler.version>0.5.1</httphandler.version>
+		<httphandler.version>0.7.0</httphandler.version>
 		<beefeater.version>0.8.0</beefeater.version>
 		<spider.version>0.20.0</spider.version>
 	</properties>
