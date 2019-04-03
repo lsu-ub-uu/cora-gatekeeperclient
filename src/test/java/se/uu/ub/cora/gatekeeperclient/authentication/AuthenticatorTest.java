@@ -30,20 +30,25 @@ import se.uu.ub.cora.beefeater.authentication.User;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactorySpy;
 import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerSpy;
 import se.uu.ub.cora.spider.authentication.AuthenticationException;
-import se.uu.ub.cora.spider.authentication.Authenticator;
 
 public class AuthenticatorTest {
-	private Authenticator authenticator;
+	private AuthenticatorImp authenticator;
 	private User logedInUser;
 	private HttpHandlerSpy httpHandler;
 	private HttpHandlerFactorySpy httpHandlerFactory;
+	private String baseUrl;
 
 	@BeforeMethod
 	public void setUp() {
 		httpHandlerFactory = new HttpHandlerFactorySpy();
-		String baseUrl = "http://localhost:8080/gatekeeper/";
+		baseUrl = "http://localhost:8080/gatekeeper/";
 		authenticator = AuthenticatorImp.usingBaseUrlAndHttpHandlerFactory(baseUrl,
 				httpHandlerFactory);
+	}
+
+	@Test
+	public void testGetBaseURL() throws Exception {
+		assertEquals(authenticator.getBaseURL(), baseUrl);
 	}
 
 	@Test

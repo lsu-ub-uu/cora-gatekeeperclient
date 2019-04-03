@@ -109,4 +109,9 @@ public final class AuthenticatorImp implements Authenticator {
 		return role.getValueAsJsonString("value").getStringValue();
 	}
 
+	public String getBaseURL() {
+		// Needed for test
+		return baseUrl;
+	}
+
 }
