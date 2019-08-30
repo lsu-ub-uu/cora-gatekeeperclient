@@ -25,9 +25,11 @@
 
 	<properties>
 		<json.version>1.0.0</json.version>
+		<logger.version>1.0.0</logger.version>
 		<httphandler.version>1.0.0</httphandler.version>
 		<beefeater.version>1.0.0</beefeater.version>
-		<spider.version>1.0.0</spider.version>
+		<spider.version>1.5.0</spider.version>
+		<storage.version>1.2.0</storage.version>
 	</properties>
 
 	<scm>
@@ -46,6 +48,12 @@
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>logger</artifactId>
+			<version>${logger.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>httphandler</artifactId>
 			<version>${httphandler.version}</version>
 			<scope>compile</scope>
@@ -60,6 +68,12 @@
 			<artifactId>spider</artifactId>
 			<version>${spider.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>storage</artifactId>
+			<version>${storage.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
