@@ -31,7 +31,7 @@
 		<json.version>1.0.0</json.version>
 		<logger.version>1.0.0</logger.version>
 		<httphandler.version>1.0.0</httphandler.version>
-		<spider.version>1.6.0</spider.version>
+		<spider.version>1.7.0</spider.version>
 		<storage.version>1.3.0</storage.version>
 		<search.version>1.0.0</search.version>
 	</properties>
