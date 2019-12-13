@@ -31,9 +31,9 @@
 		<json.version>2.0.1</json.version>
 		<logger.version>2.0.0</logger.version>
 		<httphandler.version>2.0.0</httphandler.version>
-		<spider.version>3.1.0</spider.version>
-		<storage.version>3.1.0</storage.version>
-		<search.version>3.1.0</search.version>
+		<spider.version>3.2.0</spider.version>
+		<storage.version>3.2.0</storage.version>
+		<search.version>3.2.0</search.version>
 	</properties>
 
 	<scm>
