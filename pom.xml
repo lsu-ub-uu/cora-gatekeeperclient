@@ -18,7 +18,7 @@
 	</parent>
 
 	<artifactId>gatekeeperclient</artifactId>
-	<version>3.7.0-SNAPSHOT</version>
+	<version>3.7.0</version>
 	<packaging>jar</packaging>
 	<build>
 		<finalName>cora-${artifactId}-${version}</finalName>
@@ -40,7 +40,7 @@
 		<connection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</connection>
 		<developerConnection>scm:git:https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</developerConnection>
 		<url>https://github.com/lsu-ub-uu/cora-gatekeeperclient.git</url>
-	  <tag>release/3.7</tag>
+	  <tag>gatekeeperclient-3.7.0</tag>
   </scm>
 
 	<dependencies>
