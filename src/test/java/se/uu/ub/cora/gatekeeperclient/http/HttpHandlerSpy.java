@@ -94,4 +94,10 @@ public class HttpHandlerSpy implements HttpHandler {
 
 	}
 
+	@Override
+	public InputStream getResponseBinary() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
