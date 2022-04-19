@@ -18,7 +18,7 @@
 	</parent>
 
 	<artifactId>gatekeeperclient</artifactId>
-	<version>3.16-SNAPSHOT</version>
+	<version>4.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<build>
 		<finalName>cora-${artifactId}-${version}</finalName>
