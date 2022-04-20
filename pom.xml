@@ -21,7 +21,7 @@
 	<version>4.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<build>
-		<finalName>cora-${artifactId}-${version}</finalName>
+		<finalName>cora-${project.artifactId}-${project.version}</finalName>
 	</build>
 	
 
