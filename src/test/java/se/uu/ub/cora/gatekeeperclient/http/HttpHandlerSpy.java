@@ -20,6 +20,7 @@
 package se.uu.ub.cora.gatekeeperclient.http;
 
 import java.io.InputStream;
+import java.util.Map;
 
 import se.uu.ub.cora.httphandler.HttpHandler;
 
@@ -96,6 +97,12 @@ public class HttpHandlerSpy implements HttpHandler {
 
 	@Override
 	public InputStream getResponseBinary() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, String> getResponseHeaders() {
 		// TODO Auto-generated method stub
 		return null;
 	}
