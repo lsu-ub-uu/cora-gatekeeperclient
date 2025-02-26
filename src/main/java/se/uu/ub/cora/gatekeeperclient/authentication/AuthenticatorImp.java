@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Uppsala University Library
+ * Copyright 2016, 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -90,22 +90,22 @@ public final class AuthenticatorImp implements Authenticator {
 	}
 
 	private void parseAndSetRolesInUser() {
-		JsonArray rolesPlusChildren = getRolesPlusChildrenFromJsonUser();
-		for (JsonValue child : rolesPlusChildren) {
-			String roleName = getRoleNameFromRolePlusChild(child);
+		JsonArray rolesChildren = getRolesChildrenFromJsonUser();
+		for (JsonValue child : rolesChildren) {
+			String roleName = getRoleNameFromRoleChild(child);
 			user.roles.add(roleName);
 		}
 	}
 
-	private JsonArray getRolesPlusChildrenFromJsonUser() {
+	private JsonArray getRolesChildrenFromJsonUser() {
 		JsonArray userChildren = jsonUser.getValueAsJsonArray(CHILDREN);
 		JsonObject rolesPlus = userChildren.getValueAsJsonObject(0);
 		return rolesPlus.getValueAsJsonArray(CHILDREN);
 	}
 
-	private String getRoleNameFromRolePlusChild(JsonValue child) {
-		JsonArray rolePlusChildren = ((JsonObject) child).getValueAsJsonArray(CHILDREN);
-		JsonObject role = rolePlusChildren.getValueAsJsonObject(0);
+	private String getRoleNameFromRoleChild(JsonValue child) {
+		JsonArray roleChildren = ((JsonObject) child).getValueAsJsonArray(CHILDREN);
+		JsonObject role = roleChildren.getValueAsJsonObject(0);
 		return role.getValueAsJsonString("value").getStringValue();
 	}
 

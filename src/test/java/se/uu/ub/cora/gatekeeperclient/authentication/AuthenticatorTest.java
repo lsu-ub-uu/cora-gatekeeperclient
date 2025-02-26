@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Uppsala University Library
+ * Copyright 2016, 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -47,7 +47,7 @@ public class AuthenticatorTest {
 	}
 
 	@Test
-	public void testGetBaseURL() throws Exception {
+	public void testGetBaseURL() {
 		assertEquals(authenticator.getBaseURL(), baseUrl);
 	}
 
@@ -70,7 +70,7 @@ public class AuthenticatorTest {
 	@Test
 	public void testHttpAnswerParsedToUser() {
 		logedInUser = authenticator.getUserForToken("someToken");
-		assertEquals(logedInUser.id, "someId2");
+		assertEquals(logedInUser.id, "someId");
 	}
 
 	@Test

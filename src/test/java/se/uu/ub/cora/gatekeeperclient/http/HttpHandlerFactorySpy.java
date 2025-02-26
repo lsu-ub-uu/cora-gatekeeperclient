@@ -41,12 +41,31 @@ public class HttpHandlerFactorySpy implements HttpHandlerFactory {
 		factored.add(httpHandlerSpy);
 		httpHandlerSpy.setURL(url);
 		httpHandlerSpy.setResponseCode(status);
-		String jsonAnswer = "{\"children\":[{\"children\":[{\"children\":["
-				+ "{\"name\":\"role\",\"value\":\"someRole1\"}],\"name\":\"rolePlus\"}"
-				+ ",{\"children\":[{\"name\":\"role\",\"value\":\"someRole2\"}]"
-				+ ",\"name\":\"rolePlus\"}],\"name\":\"rolesPlus\"}],\"name\":\"someId2\"}";
-		httpHandlerSpy.setResponseText(jsonAnswer);
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {
+				      "children": [
+				        {
+				          "children": [ {"name": "id", "value": "someRole1"} ],
+				          "name": "permissionRole"
+				        },
+				        {
+				          "children": [ {"name": "id", "value": "someRole2"} ],
+				          "name": "permissionRole"
+				        }
+				      ],
+				      "name": "userRole"
+				    }
+				  ],
+				  "name": "someId"
+				}""";
+		httpHandlerSpy.setResponseText(compactJson(jsonAnswer));
 		return httpHandlerSpy;
+	}
+
+	private String compactJson(String json) {
+		return json.replace("\n", "").replace("\r", "").replace(" ", "");
 	}
 
 	public void setResponseCode(int status) {
