@@ -33,6 +33,7 @@ import se.uu.ub.cora.spider.authentication.Authenticator;
 public final class AuthenticatorImp implements Authenticator {
 	private static final int STATUS_OK = 200;
 	private static final String CHILDREN = "children";
+	private static final String VALUE = "value";
 	private HttpHandlerFactory httpHandlerFactory;
 	private User user;
 	private JsonObject jsonUser;
@@ -49,6 +50,7 @@ public final class AuthenticatorImp implements Authenticator {
 		return new AuthenticatorImp(baseUrl, httpHandlerFactory);
 	}
 
+	// TODO: Implement getGuestUser method instead of passsing null token to getUserForToken method
 	@Override
 	public User getUserForToken(String authToken) {
 		getUserForTokenFromGatekeeper(authToken);
@@ -70,8 +72,8 @@ public final class AuthenticatorImp implements Authenticator {
 
 	private User createUserFromResponseText() {
 		getJsonUserFromResponseText(responseText);
-		setIdInUser();
-		parseAndSetRolesInUser();
+		setId();
+		setUserFields();
 		return user;
 	}
 
@@ -80,7 +82,7 @@ public final class AuthenticatorImp implements Authenticator {
 		jsonUser = (JsonObject) jsonParser.parseString(responseText);
 	}
 
-	private void setIdInUser() {
+	private void setId() {
 		String id = getIdFromJsonUser();
 		user = new User(id);
 	}
@@ -89,24 +91,9 @@ public final class AuthenticatorImp implements Authenticator {
 		return jsonUser.getValueAsJsonString("name").getStringValue();
 	}
 
-	private void parseAndSetRolesInUser() {
-		JsonArray rolesChildren = getRolesChildrenFromJsonUser();
-		for (JsonValue child : rolesChildren) {
-			String roleName = getRoleNameFromRoleChild(child);
-			user.roles.add(roleName);
-		}
-	}
-
-	private JsonArray getRolesChildrenFromJsonUser() {
-		JsonArray userChildren = jsonUser.getValueAsJsonArray(CHILDREN);
-		JsonObject rolesPlus = userChildren.getValueAsJsonObject(0);
-		return rolesPlus.getValueAsJsonArray(CHILDREN);
-	}
-
-	private String getRoleNameFromRoleChild(JsonValue child) {
-		JsonArray roleChildren = ((JsonObject) child).getValueAsJsonArray(CHILDREN);
-		JsonObject role = roleChildren.getValueAsJsonObject(0);
-		return role.getValueAsJsonString("value").getStringValue();
+	private void setUserFields() {
+		JsonArray children = jsonUser.getValueAsJsonArray(CHILDREN);
+		children.forEach(this::setUserField);
 	}
 
 	public String getBaseURL() {
@@ -114,4 +101,57 @@ public final class AuthenticatorImp implements Authenticator {
 		return baseUrl;
 	}
 
+	private void setUserField(JsonValue child) {
+		JsonObject jsonObject = (JsonObject) child;
+		String childName = jsonObject.getValueAsJsonString("name").getStringValue();
+		if (isActiveStatus(childName)) {
+			setActiveStatus(jsonObject);
+		}
+		if (isUserRole(childName)) {
+			setUserRoles(jsonObject);
+		}
+		if (isPermissionUnit(childName)) {
+			setPermissionUnit(jsonObject);
+		}
+	}
+
+	private void setPermissionRole(JsonObject permissionRole) {
+		String roleName = getRoleNameFromRoleChild(permissionRole);
+		user.roles.add(roleName);
+	}
+
+	private String getRoleNameFromRoleChild(JsonObject permissionRole) {
+		JsonArray permissionRoleChildren = permissionRole.getValueAsJsonArray(CHILDREN);
+		JsonObject roleId = permissionRoleChildren.getValueAsJsonObject(0);
+		return roleId.getValueAsJsonString(VALUE).getStringValue();
+	}
+
+	private boolean isActiveStatus(String childName) {
+		return childName.equals("activeStatus");
+	}
+
+	private void setActiveStatus(JsonObject jsonObject) {
+		String activeStatusValue = jsonObject.getValueAsJsonString(VALUE).getStringValue();
+		user.active = activeStatusValue.equals("active");
+	}
+
+	private boolean isUserRole(String childName) {
+		return childName.equals("userRole");
+	}
+
+	private void setUserRoles(JsonObject jsonObject) {
+		JsonArray userRoles = jsonObject.getValueAsJsonArray(CHILDREN);
+		for (JsonValue permissionRole : userRoles) {
+			setPermissionRole((JsonObject) permissionRole);
+		}
+	}
+
+	private boolean isPermissionUnit(String childName) {
+		return childName.equals("permissionUnit");
+	}
+
+	private void setPermissionUnit(JsonObject jsonObject) {
+		String value = jsonObject.getValueAsJsonString(VALUE).getStringValue();
+		user.permissionUnitIds.add(value);
+	}
 }
