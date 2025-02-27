@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Uppsala University Library
+ * Copyright 2016, 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -20,72 +20,243 @@
 package se.uu.ub.cora.gatekeeperclient.authentication;
 
 import static org.testng.Assert.assertEquals;
-
-import java.util.Iterator;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import se.uu.ub.cora.beefeater.authentication.User;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerFactorySpy;
-import se.uu.ub.cora.gatekeeperclient.http.HttpHandlerSpy;
+import se.uu.ub.cora.httphandler.spies.HttpHandlerFactorySpy;
+import se.uu.ub.cora.httphandler.spies.HttpHandlerSpy;
 import se.uu.ub.cora.spider.authentication.AuthenticationException;
 
 public class AuthenticatorTest {
 	private AuthenticatorImp authenticator;
-	private User logedInUser;
-	private HttpHandlerSpy httpHandler;
-	private HttpHandlerFactorySpy httpHandlerFactory;
+	private User user;
 	private String baseUrl;
+	private HttpHandlerFactorySpy httpHandlerFactory;
+	private HttpHandlerSpy httpHandler;
 
 	@BeforeMethod
 	public void setUp() {
+		httpHandler = new HttpHandlerSpy();
 		httpHandlerFactory = new HttpHandlerFactorySpy();
+		httpHandlerFactory.MRV.setDefaultReturnValuesSupplier("factor", () -> httpHandler);
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {
+				      "children": [
+				        {
+				          "children": [ {"name": "id", "value": "someRole1"} ],
+				          "name": "permissionRole"
+				        },
+				        {
+				          "children": [ {"name": "id", "value": "someRole2"} ],
+				          "name": "permissionRole"
+				        }
+				      ],
+				      "name": "userRole"
+				    }
+				  ],
+				  "name": "someId"
+				}""";
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseText", () -> jsonAnswer);
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseCode", () -> 200);
+
 		baseUrl = "http://localhost:8080/gatekeeper/";
 		authenticator = AuthenticatorImp.usingBaseUrlAndHttpHandlerFactory(baseUrl,
 				httpHandlerFactory);
 	}
 
 	@Test
-	public void testGetBaseURL() throws Exception {
+	public void testGetBaseURL() {
 		assertEquals(authenticator.getBaseURL(), baseUrl);
 	}
 
 	@Test
 	public void testHttpHandlerCalledCorrectly() {
-		logedInUser = authenticator.getUserForToken("someToken");
-		httpHandler = httpHandlerFactory.getFactored(0);
-		assertEquals(httpHandler.requestMetod, "GET");
-		assertEquals(httpHandler.url, "http://localhost:8080/gatekeeper/rest/user/someToken");
+		user = authenticator.getUserForToken("someToken");
+
+		httpHandlerFactory.MCR.assertParameters("factor", 0,
+				"http://localhost:8080/gatekeeper/rest/user/someToken");
+		httpHandler.MCR.assertParameters("setRequestMethod", 0, "GET");
 	}
 
 	@Test
 	public void testHttpHandlerCalledCorrectlyWithNullToken() {
-		logedInUser = authenticator.getUserForToken(null);
-		httpHandler = httpHandlerFactory.getFactored(0);
-		assertEquals(httpHandler.requestMetod, "GET");
-		assertEquals(httpHandler.url, "http://localhost:8080/gatekeeper/rest/user/");
-	}
+		user = authenticator.getUserForToken(null);
 
-	@Test
-	public void testHttpAnswerParsedToUser() {
-		logedInUser = authenticator.getUserForToken("someToken");
-		assertEquals(logedInUser.id, "someId2");
-	}
-
-	@Test
-	public void testHttpAnswerParsedToUserRoles() {
-		logedInUser = authenticator.getUserForToken("someToken");
-		assertEquals(logedInUser.roles.size(), 2);
-		Iterator<String> iterator = logedInUser.roles.iterator();
-		assertEquals(iterator.next(), "someRole2");
-		assertEquals(iterator.next(), "someRole1");
+		httpHandlerFactory.MCR.assertParameters("factor", 0,
+				"http://localhost:8080/gatekeeper/rest/user/");
+		httpHandler.MCR.assertParameters("setRequestMethod", 0, "GET");
 	}
 
 	@Test(expectedExceptions = AuthenticationException.class)
 	public void testUnauthorizedToken() {
-		httpHandlerFactory.setResponseCode(401);
-		logedInUser = authenticator.getUserForToken("dummyNonAuthenticatedToken");
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseCode", () -> 401);
+
+		user = authenticator.getUserForToken("dummyNonAuthenticatedToken");
 	}
 
+	@Test
+	public void testHttpAnswerParsedToActiveUser() {
+		setResponseTextActiveUser();
+
+		user = authenticator.getUserForToken("someToken");
+
+		assertEquals(user.id, "someId");
+		assertTrue(user.active);
+		assertEquals(user.roles.size(), 0);
+		assertEquals(user.permissionUnitIds.size(), 0);
+	}
+
+	private void setResponseTextActiveUser() {
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {
+				      "children": [],
+				      "name": "userRole"
+				    },
+				    {"name": "activeStatus", "value": "active"}
+				  ],
+				  "name": "someId"
+				}
+				""";
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseText", () -> jsonAnswer);
+	}
+
+	@Test
+	public void testHttpAnswerParsedToInactiveUser() {
+		setResponseTextInactiveUser();
+
+		user = authenticator.getUserForToken("someToken");
+
+		assertEquals(user.id, "someId");
+		assertFalse(user.active);
+	}
+
+	private void setResponseTextInactiveUser() {
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {
+				      "children": [],
+				      "name": "userRole"
+				    },
+				    {"name": "activeStatus", "value": "inactive"}
+				  ],
+				  "name": "someId"
+				}
+				""";
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseText", () -> jsonAnswer);
+	}
+
+	@Test
+	public void testHttpAnswerParsedToUserWithUserRoles() {
+		setResponseTextUserWithPermissionRoles();
+
+		user = authenticator.getUserForToken("someToken");
+
+		assertEquals(user.roles.size(), 2);
+		assertTrue(user.roles.contains("someRole1"));
+		assertTrue(user.roles.contains("someRole2"));
+	}
+
+	private void setResponseTextUserWithPermissionRoles() {
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {"name": "activeStatus", "value": "active"},
+				    {
+				      "children": [
+				        {
+				          "children": [ {"name": "id", "value": "someRole1"} ],
+				          "name": "permissionRole"
+				        },
+				        {
+				          "children": [ {"name": "id", "value": "someRole2"} ],
+				          "name": "permissionRole"
+				        }
+				      ],
+				      "name": "userRole"
+				    }
+				  ],
+				  "name": "someId"
+				}""";
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseText", () -> jsonAnswer);
+	}
+
+	@Test
+	public void testHttpAnswerParsedToUserWithPermissionUnits() {
+		setResponseTextUserWithPermissionUnits();
+
+		user = authenticator.getUserForToken("someToken");
+
+		assertEquals(user.permissionUnitIds.size(), 2);
+		assertTrue(user.permissionUnitIds.contains("somePermissionUnit001"));
+		assertTrue(user.permissionUnitIds.contains("somePermissionUnit002"));
+	}
+
+	private void setResponseTextUserWithPermissionUnits() {
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {
+				      "children": [],
+				      "name": "userRole"
+				    },
+				    {"name": "permissionUnit", "value": "somePermissionUnit001"},
+				    {"name": "permissionUnit", "value": "somePermissionUnit002"},
+				    {"name": "activeStatus", "value": "active"}
+				  ],
+				  "name": "someId"
+				}
+				""";
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseText", () -> jsonAnswer);
+	}
+
+	@Test
+	public void testHttpAnswerParsedToUserWithAllFields() {
+		setResponseTextUserWithAllFields();
+
+		user = authenticator.getUserForToken("someToken");
+
+		assertEquals(user.id, "someId");
+		assertTrue(user.active);
+		assertEquals(user.permissionUnitIds.size(), 2);
+		assertTrue(user.permissionUnitIds.contains("somePermissionUnit001"));
+		assertTrue(user.permissionUnitIds.contains("somePermissionUnit002"));
+		assertEquals(user.roles.size(), 2);
+		assertTrue(user.roles.contains("someRole1"));
+		assertTrue(user.roles.contains("someRole2"));
+	}
+
+	private void setResponseTextUserWithAllFields() {
+		String jsonAnswer = """
+				{
+				  "children": [
+				    {
+				      "children": [
+				        {
+				          "children": [ {"name": "id", "value": "someRole1"} ],
+				          "name": "permissionRole"
+				        },
+				        {
+				          "children": [ {"name": "id", "value": "someRole2"} ],
+				          "name": "permissionRole"
+				        }
+				      ],
+				      "name": "userRole"
+				    },
+				    {"name": "permissionUnit", "value": "somePermissionUnit001"},
+				    {"name": "permissionUnit", "value": "somePermissionUnit002"},
+				    {"name": "activeStatus", "value": "active"}
+				  ],
+				  "name": "someId"
+				}""";
+		httpHandler.MRV.setDefaultReturnValuesSupplier("getResponseText", () -> jsonAnswer);
+	}
 }
